@@ -1,0 +1,123 @@
+{
+  "endpoint": "https://api.atishghimire.com.np/v1/mcp",
+  "lifecycle": [
+    {
+      "jsonrpc": "2.0",
+      "id": "arro-purchase-prepare-1",
+      "method": "tools/call",
+      "params": {
+        "name": "prepare_purchase",
+        "arguments": {
+          "merchantDomain": "merchant.example",
+          "selectedOffer": {
+            "variantId": "merchant-variant-id",
+            "title": "Selected product",
+            "quantity": 1,
+            "url": "https://merchant.example/products/selected-product"
+          },
+          "agentContext": {
+            "integrationId": "generic-agent",
+            "surface": "generic_mcp",
+            "requestedActionScope": "write:purchase",
+            "externalSubjectRef": "opaque-user-ref",
+            "externalTaskRef": "opaque-task-ref",
+            "hostCapabilities": [
+              "source_labels",
+              "freshness",
+              "caveats",
+              "no_buy_warnings",
+              "commercial_disclosures",
+              "authority_limits",
+              "allowed_next_actions",
+              "purchase_state"
+            ]
+          },
+          "idempotencyKey": "generic-prepare-0001"
+        }
+      }
+    },
+    {
+      "note": "Read payment.acceptedCapabilities from prepare_purchase. Run prepare_payment only when the agent can execute an exact returned capability; otherwise use the returned merchant-hosted continuation.",
+      "jsonrpc": "2.0",
+      "id": "arro-purchase-payment-1",
+      "method": "tools/call",
+      "params": {
+        "name": "prepare_payment",
+        "arguments": {
+          "id": "{{purchaseId}}",
+          "portableCapabilities": [
+            {
+              "protocol": "x402",
+              "version": "2",
+              "methods": ["exact"],
+              "networks": ["eip155:8453"],
+              "assets": ["USDC"]
+            }
+          ],
+          "agentContext": {
+            "integrationId": "generic-agent",
+            "surface": "generic_mcp",
+            "requestedActionScope": "write:purchase"
+          },
+          "idempotencyKey": "generic-payment-action-0001"
+        }
+      }
+    },
+    {
+      "note": "A wallet or trusted payment component fills the exact protocol-native result from the signed action challenge. The language model must not manufacture it.",
+      "jsonrpc": "2.0",
+      "id": "arro-purchase-provide-1",
+      "method": "tools/call",
+      "params": {
+        "name": "provide_payment",
+        "arguments": {
+          "actionToken": "{{signedActionToken}}",
+          "result": "{{see x402-agent-payment.json or mpp-agent-payment.json}}",
+          "idempotencyKey": "generic-payment-result-0001",
+          "agentContext": {
+            "integrationId": "generic-agent",
+            "surface": "generic_mcp",
+            "requestedActionScope": "write:complete_purchase"
+          }
+        }
+      }
+    },
+    {
+      "note": "Confirm only with current human approval or a Arro-accepted delegated mandate. A payment credential is not an Order.",
+      "jsonrpc": "2.0",
+      "id": "arro-purchase-confirm-1",
+      "method": "tools/call",
+      "params": {
+        "name": "confirm_purchase",
+        "arguments": {
+          "id": "{{purchaseId}}",
+          "approvalRef": "{{consume-onceApprovalRef}}",
+          "checkoutSnapshotHash": "{{currentCheckoutSnapshotHash}}",
+          "agentContext": {
+            "integrationId": "generic-agent",
+            "surface": "generic_mcp",
+            "requestedActionScope": "write:complete_purchase"
+          },
+          "idempotencyKey": "generic-confirm-0001"
+        }
+      }
+    },
+    {
+      "note": "Treat state=completed as true only when the response includes merchant-authoritative Order continuity.",
+      "jsonrpc": "2.0",
+      "id": "arro-purchase-read-1",
+      "method": "tools/call",
+      "params": {
+        "name": "get_purchase",
+        "arguments": {
+          "id": "{{purchaseId}}",
+          "agentContext": {
+            "integrationId": "generic-agent",
+            "surface": "generic_mcp",
+            "requestedActionScope": "read:purchase"
+          }
+        }
+      }
+    }
+  ]
+}

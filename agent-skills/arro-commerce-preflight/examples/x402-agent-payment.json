@@ -1,0 +1,73 @@
+{
+  "protocol": "x402",
+  "version": "2",
+  "registrationRequired": false,
+  "preparePayment": {
+    "id": "{{purchaseId}}",
+    "portableCapabilities": [
+      {
+        "protocol": "x402",
+        "version": "2",
+        "methods": ["exact"],
+        "networks": ["eip155:8453"],
+        "assets": ["USDC"]
+      }
+    ],
+    "preference": {
+      "mode": "x402"
+    },
+    "idempotencyKey": "x402-payment-action-0001"
+  },
+  "providePayment": {
+    "actionToken": "{{signedActionTokenFromPreparePayment}}",
+    "result": {
+      "type": "x402_payment_payload",
+      "paymentPayload": {
+        "x402Version": 2,
+        "resource": {
+          "url": "{{exactResourceUrlFromPaymentRequiredChallenge}}",
+          "description": "{{exactResourceDescriptionWhenPresent}}"
+        },
+        "accepted": {
+          "scheme": "{{exactSchemeFromAcceptedRequirement}}",
+          "network": "{{exactNetworkFromAcceptedRequirement}}",
+          "amount": "{{exactAmountFromAcceptedRequirement}}",
+          "asset": "{{exactAssetFromAcceptedRequirement}}",
+          "payTo": "{{exactPayToFromAcceptedRequirement}}",
+          "maxTimeoutSeconds": 300
+        },
+        "payload": {
+          "walletProducedCredential": "{{protocolNativeSingleUseCredential}}"
+        },
+        "extensions": {
+          "dev.arro.checkout": {
+            "info": {
+              "merchant_origin": "{{merchantOrigin}}",
+              "checkout_id": "{{checkoutId}}",
+              "checkout_snapshot_hash": "{{checkoutSnapshotHash}}",
+              "amount": 0,
+              "currency": "{{currency}}"
+            },
+            "schema": {
+              "type": "object",
+              "required": [
+                "merchant_origin",
+                "checkout_id",
+                "checkout_snapshot_hash",
+                "amount",
+                "currency"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "idempotencyKey": "x402-payment-result-0001"
+  },
+  "rules": [
+    "Use the exact PAYMENT-REQUIRED challenge returned through Arro's signed action.",
+    "A wallet signs the protocol-native payload; a model must not invent it.",
+    "Never reuse a payload or submit it for a different Checkout, amount, currency, merchant, or snapshot.",
+    "Only a merchant Order proves purchase completion."
+  ]
+}

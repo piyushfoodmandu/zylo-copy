@@ -1,0 +1,45 @@
+secrets:
+  postgres-password:
+    file: ${POSTGRES_PASSWORD_HOST_FILE:?POSTGRES_PASSWORD_HOST_FILE is required}
+  api-database-url:
+    file: ${API_DATABASE_URL_HOST_FILE:?API_DATABASE_URL_HOST_FILE is required}
+  api-key-pepper:
+    file: ${API_KEY_PEPPER_HOST_FILE:?API_KEY_PEPPER_HOST_FILE is required}
+  agent-session-signing-secret:
+    file: ${AGENT_SESSION_SIGNING_SECRET_HOST_FILE:?AGENT_SESSION_SIGNING_SECRET_HOST_FILE is required}
+  frontend-server-token:
+    file: ${ARRO_FRONTEND_SERVER_TOKEN_HOST_FILE:?ARRO_FRONTEND_SERVER_TOKEN_HOST_FILE is required}
+  ucp-platform-signing-private-jwk:
+    file: ${UCP_PLATFORM_SIGNING_PRIVATE_JWK_HOST_FILE:?UCP_PLATFORM_SIGNING_PRIVATE_JWK_HOST_FILE is required}
+
+services:
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: !reset null
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+    secrets:
+      - postgres-password
+
+  api:
+    environment:
+      DATABASE_URL: !reset null
+      DATABASE_URL_FILE: /run/secrets/api-database-url
+      API_KEY_PEPPER: !reset null
+      API_KEY_PEPPER_FILE: /run/secrets/api-key-pepper
+      AGENT_SESSION_SIGNING_SECRET: !reset null
+      AGENT_SESSION_SIGNING_SECRET_FILE: /run/secrets/agent-session-signing-secret
+      ARRO_FRONTEND_SERVER_TOKEN: !reset null
+      ARRO_FRONTEND_SERVER_TOKEN_FILE: /run/secrets/frontend-server-token
+      UCP_PLATFORM_SIGNING_PRIVATE_JWK_JSON: !reset null
+      UCP_PLATFORM_SIGNING_PRIVATE_JWK_FILE: /run/secrets/ucp-platform-signing-private.jwk
+    secrets:
+      - source: api-database-url
+        target: api-database-url
+      - source: api-key-pepper
+        target: api-key-pepper
+      - source: agent-session-signing-secret
+        target: agent-session-signing-secret
+      - source: frontend-server-token
+        target: frontend-server-token
+      - source: ucp-platform-signing-private-jwk
+        target: ucp-platform-signing-private.jwk

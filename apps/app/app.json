@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "Arro",
+    "slug": "arro",
+    "version": "0.1.0",
+    "orientation": "default",
+    "userInterfaceStyle": "light",
+    "icon": "./assets/app-icon.png",
+    "web": {
+      "bundler": "metro",
+      "output": "server"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "np.com.atishghimire.arro",
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "np.com.atishghimire.arro",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/app-icon.png",
+        "backgroundColor": "#CC2963"
+      }
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "asyncRoutes": "production",
+          "unstable_useServerMiddleware": true,
+          "unstable_useServerDataLoaders": true,
+          "unstable_useServerRendering": true
+        }
+      ],
+      "expo-web-browser",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 192,
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFFFF"
+        }
+      ],
+      [
+        "@stripe/stripe-react-native",
+        {
+          "enableGooglePay": true
+        }
+      ],
+      "./plugins/withGooglePayEnvironment.cjs"
+    ],
+    "scheme": "arro"
+  }
+}

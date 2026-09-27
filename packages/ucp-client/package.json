@@ -1,0 +1,32 @@
+{
+  "name": "@arro/ucp-client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./reference-merchant.test-support": {
+      "types": "./dist/reference-merchant.test-support.d.ts",
+      "default": "./dist/reference-merchant.test-support.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm --workspace @arro/contracts run build && vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "verify:protocol": "npm --workspace @arro/contracts run build && node src/verify-ucp-client.ts protocol",
+    "verify:checkout": "npm --workspace @arro/contracts run build && node src/verify-ucp-client.ts checkout",
+    "verify:payment-handlers": "npm --workspace @arro/contracts run build && node src/verify-ucp-client.ts payment-handlers",
+    "verify:order-webhooks": "npm --workspace @arro/contracts run build && node src/verify-ucp-client.ts order-webhooks",
+    "verify:idempotency-recovery": "npm --workspace @arro/contracts run build && node src/verify-ucp-client.ts idempotency-recovery"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.49",
+    "@arro/contracts": "file:../contracts"
+  }
+}

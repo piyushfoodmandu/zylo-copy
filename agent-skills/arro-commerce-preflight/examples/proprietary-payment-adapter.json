@@ -1,0 +1,29 @@
+{
+  "purpose": "Optional provider adapter metadata. This config describes an executable adapter and does not approve or register calling agents.",
+  "publicHandlerSpec": {
+    "adapterKind": "processor_tokenizer",
+    "handlerName": "com.merchant.payment.processor_tokenizer",
+    "platformHandlerId": "arro_processor_tokenizer_client",
+    "versions": ["2026-08-25"],
+    "specification": "https://merchant.example/specs/processor-tokenizer",
+    "schema": "https://merchant.example/schemas/processor-tokenizer.json",
+    "environment": "production",
+    "availableInstruments": [{ "type": "CARD" }],
+    "handlerConfig": {
+      "tokenize_endpoint": "https://merchant.example/payments/tokenize"
+    }
+  },
+  "privateRuntimeAuth": {
+    "location": "UCP_TOKENIZER_AUTH_JSON or an external secret manager",
+    "requirements": [
+      "Exact merchant origin and handler identity",
+      "Authenticated HTTPS tokenizer request",
+      "No secret or reusable payment credential in public handler metadata",
+      "No caller allowlist and no agent approval semantics"
+    ]
+  },
+  "discovery": {
+    "acceptedMechanisms": ["signed provider metadata", "Agent Card", "JWKS", "provider authentication"],
+    "rule": "Discovery can prove adapter identity; it cannot grant source, checkout, wallet, or private-host authority."
+  }
+}

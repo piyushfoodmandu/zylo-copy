@@ -1,0 +1,16 @@
+.git
+.env
+.env.*
+!.env.example
+.runtime
+**/*.jwk
+**/*.jwk.*
+node_modules
+**/node_modules
+dist
+**/dist
+coverage
+**/*.tsbuildinfo
+npm-debug.log*
+.DS_Store
+apps/app

@@ -1,0 +1,28 @@
+{
+  "expectedActionScope": "read:search",
+  "renderedTrustSignals": [
+    "source_labels",
+    "freshness",
+    "caveats",
+    "no_buy_warnings",
+    "commercial_disclosures",
+    "authority_limits",
+    "allowed_next_actions"
+  ],
+  "agentContext": {
+    "integrationId": "hermes-agent-preview",
+    "surface": "hermes_agent",
+    "requestedActionScope": "read:search",
+    "externalSubjectRef": "opaque-user-or-session-ref",
+    "externalTaskRef": "opaque-shopping-task-ref",
+    "hostCapabilities": [
+      "source_labels",
+      "freshness",
+      "caveats",
+      "no_buy_warnings",
+      "commercial_disclosures",
+      "authority_limits",
+      "allowed_next_actions"
+    ]
+  }
+}

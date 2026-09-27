@@ -1,0 +1,50 @@
+{
+  "jsonrpc": "2.0",
+  "id": "arro-example-search-1",
+  "method": "tools/call",
+  "params": {
+    "name": "search_products",
+    "arguments": {
+      "query": "trail running shoes for wet pavement under 150 dollars",
+      "intent": {
+        "summary": "Find source-backed trail running shoes under USD 150 for wet pavement, preserving caveats and safe next actions.",
+        "productTypes": ["trail running shoes"],
+        "categories": ["Footwear"],
+        "attributes": {
+          "Use": ["wet pavement"],
+          "Price": ["under 150 USD"]
+        },
+        "maxPrice": {
+          "amountMinor": 15000,
+          "currency": "USD"
+        },
+        "sort": "relevance"
+      },
+      "context": {
+        "locale": "en-US",
+        "region": "US",
+        "currency": "USD",
+        "channel": "agent"
+      },
+      "agentContext": {
+        "integrationId": "generic-mcp-preview",
+        "surface": "generic_mcp",
+        "requestedActionScope": "read:search",
+        "externalSubjectRef": "opaque-user-or-session-ref",
+        "externalTaskRef": "opaque-shopping-task-ref",
+        "hostCapabilities": [
+          "source_labels",
+          "freshness",
+          "caveats",
+          "no_buy_warnings",
+          "commercial_disclosures",
+          "authority_limits",
+          "allowed_next_actions"
+        ]
+      },
+      "pagination": {
+        "limit": 5
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "arro",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=26.8.2 <27"
+  },
+  "workspaces": [
+    "packages/*",
+    "services/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "clean": "node scripts/clean.mjs",
+    "check": "npm run build && npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "verify": "npm run check && npm test && npm run check:app",
+    "db:migrate": "npm --workspace @arro/api run db:migrate",
+    "dev:api": "npm --workspace @arro/api run dev",
+    "dev:app": "npm --workspace @arro/app run start",
+    "check:app": "npm --workspace @arro/app run check",
+    "build:app": "npm --workspace @arro/app run build:web",
+    "infra:up": "docker compose up -d postgres redis",
+    "infra:down": "docker compose down",
+    "verify:launch": "node --env-file-if-exists=.env scripts/verify-launch.mjs",
+    "serve:app": "npm --workspace @arro/app run serve"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
+  }
+}

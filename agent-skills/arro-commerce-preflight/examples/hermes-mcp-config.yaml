@@ -1,0 +1,23 @@
+mcp_servers:
+  arro:
+    url: "https://api.atishghimire.com.np/v1/mcp"
+    timeout: 120
+    connect_timeout: 60
+    enabled: true
+    tools:
+      include:
+        - agent_diagnostics
+        - search_products
+        - get_product_detail
+        - get_source_state
+        - compare_products
+        - sanity_check_product
+        - prepare_purchase
+        - update_purchase
+        - prepare_payment
+        - provide_payment
+        - confirm_purchase
+        - get_purchase
+        - cancel_purchase
+      resources: false
+      prompts: false

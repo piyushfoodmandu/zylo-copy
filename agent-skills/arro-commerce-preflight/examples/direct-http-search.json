@@ -1,0 +1,42 @@
+{
+  "method": "POST",
+  "path": "/v1/catalog/search",
+  "body": {
+    "query": "wireless headphones under 100 dollars",
+    "intent": {
+      "summary": "Find source-backed wireless headphones below USD 100 for a shopper comparing safe next actions.",
+      "productTypes": ["wireless headphones"],
+      "categories": ["Electronics", "Audio"],
+      "maxPrice": {
+        "amountMinor": 10000,
+        "currency": "USD"
+      },
+      "sort": "relevance"
+    },
+    "context": {
+      "locale": "en-US",
+      "region": "US",
+      "currency": "USD",
+      "channel": "agent"
+    },
+    "agentContext": {
+      "integrationId": "direct-http-preview",
+      "surface": "direct_http",
+      "requestedActionScope": "read:search",
+      "externalSubjectRef": "opaque-user-or-session-ref",
+      "externalTaskRef": "opaque-shopping-task-ref",
+      "hostCapabilities": [
+        "source_labels",
+        "freshness",
+        "caveats",
+        "no_buy_warnings",
+        "commercial_disclosures",
+        "authority_limits",
+        "allowed_next_actions"
+      ]
+    },
+    "pagination": {
+      "limit": 5
+    }
+  }
+}

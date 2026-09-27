@@ -1,0 +1,36 @@
+{
+  "name": "@arro/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/server.js",
+  "scripts": {
+    "build:deps": "npm --workspace @arro/contracts run build && npm --workspace @arro/product-intelligence run build && npm --workspace @arro/connectors run build && npm --workspace @arro/ucp-client run build",
+    "build": "tsc -p tsconfig.json",
+    "db:migrate": "node --env-file-if-exists=../../.env src/migrate.ts",
+    "db:migrate:built": "node dist/migrate.js",
+    "dev": "npm run build:deps && node --env-file-if-exists=../../.env --watch src/server.ts",
+    "retention:cleanup": "npm run build:deps && node --env-file-if-exists=../../.env src/retention.ts",
+    "start": "node --env-file-if-exists=../../.env dist/server.js",
+    "start:production": "node dist/production.js",
+    "test": "npm run build:deps && vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "verify:agent-distribution-kit": "npm run build:deps && CATALOG_ADAPTERS_JSON=[] node src/verify-agent-distribution-kit.ts"
+  },
+  "dependencies": {
+    "@elysia/openapi": "^1.4.15",
+    "@elysiajs/node": "^1.4.5",
+    "@sinclair/typebox": "^0.34.49",
+    "@arro/connectors": "file:../../services/connectors",
+    "@arro/contracts": "file:../../packages/contracts",
+    "@arro/product-intelligence": "file:../../packages/product-intelligence",
+    "@arro/ucp-client": "file:../../packages/ucp-client",
+    "elysia": "^1.4.28",
+    "pg": "^8.21.0",
+    "pino": "^10.3.1",
+    "redis": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.0"
+  }
+}

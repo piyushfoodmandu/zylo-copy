@@ -1,0 +1,67 @@
+{
+  "warning": "These are experimental Arro UCP bindings, not official UCP payment handlers.",
+  "merchantProfilePaymentHandlers": {
+    "dev.arro.payment.x402": [
+      {
+        "id": "merchant_x402_v2",
+        "version": "2026-08-25",
+        "spec": "https://api.atishghimire.com.np/schemas/payment-handlers/x402-v2.json",
+        "schema": "https://api.atishghimire.com.np/schemas/payment-handlers/x402-v2.json",
+        "available_instruments": [{ "type": "x402" }],
+        "config": {
+          "protocol_version": "2",
+          "challenge_url": "https://merchant.example/payments/x402/challenge",
+          "schemes": ["exact"],
+          "networks": ["eip155:8453"],
+          "assets": ["USDC"]
+        }
+      }
+    ],
+    "dev.arro.payment.mpp": [
+      {
+        "id": "merchant_mpp_draft",
+        "version": "2026-08-25",
+        "spec": "https://api.atishghimire.com.np/schemas/payment-handlers/mpp-draft.json",
+        "schema": "https://api.atishghimire.com.np/schemas/payment-handlers/mpp-draft.json",
+        "available_instruments": [{ "type": "mpp" }],
+        "config": {
+          "protocol_version": "draft-ietf-httpauth-payment-00",
+          "challenge_url": "https://merchant.example/payments/mpp/challenge",
+          "methods": ["tempo"],
+          "intents": ["charge"]
+        }
+      }
+    ]
+  },
+  "arroPublicHandlerSpecs": [
+    {
+      "adapterKind": "x402",
+      "handlerName": "dev.arro.payment.x402",
+      "platformHandlerId": "arro_x402_v2_client",
+      "versions": ["2026-08-25"],
+      "specification": "https://api.atishghimire.com.np/schemas/payment-handlers/x402-v2.json",
+      "schema": "https://api.atishghimire.com.np/schemas/payment-handlers/x402-v2.json",
+      "availableInstruments": [{ "type": "x402" }],
+      "handlerConfig": {
+        "protocol_version": "2",
+        "schemes": ["exact"],
+        "networks": ["eip155:8453"],
+        "assets": ["USDC"]
+      }
+    },
+    {
+      "adapterKind": "mpp",
+      "handlerName": "dev.arro.payment.mpp",
+      "platformHandlerId": "arro_mpp_draft_client",
+      "versions": ["2026-08-25"],
+      "specification": "https://api.atishghimire.com.np/schemas/payment-handlers/mpp-draft.json",
+      "schema": "https://api.atishghimire.com.np/schemas/payment-handlers/mpp-draft.json",
+      "availableInstruments": [{ "type": "mpp" }],
+      "handlerConfig": {
+        "protocol_version": "draft-ietf-httpauth-payment-00",
+        "methods": ["tempo"],
+        "intents": ["charge"]
+      }
+    }
+  ]
+}

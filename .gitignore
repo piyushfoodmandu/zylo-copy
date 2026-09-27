@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+.expo/
+*.tsbuildinfo
+.runtime/
+.env
+.env.*
+!.env.example
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+apps/app/src/uniwind-types.d.ts
+apps/app/.env.local

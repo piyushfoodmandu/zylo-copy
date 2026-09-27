@@ -1,0 +1,34 @@
+{
+  "protocol": "mpp",
+  "version": "draft-ietf-httpauth-payment-00",
+  "registrationRequired": false,
+  "preparePayment": {
+    "id": "{{purchaseId}}",
+    "portableCapabilities": [
+      {
+        "protocol": "mpp",
+        "version": "draft-ietf-httpauth-payment-00",
+        "methods": ["tempo"],
+        "intents": ["charge"]
+      }
+    ],
+    "preference": {
+      "mode": "mpp"
+    },
+    "idempotencyKey": "mpp-payment-action-0001"
+  },
+  "providePayment": {
+    "actionToken": "{{signedActionTokenFromPreparePayment}}",
+    "result": {
+      "type": "mpp_payment_credential",
+      "authorization": "Payment {{base64urlProtocolNativeCredentialForExactChallenge}}"
+    },
+    "idempotencyKey": "mpp-payment-result-0001"
+  },
+  "rules": [
+    "Use the exact WWW-Authenticate Payment challenge returned through Arro's signed action.",
+    "A wallet or payment component creates the Authorization: Payment credential outside the language model.",
+    "Treat the credential as sensitive, single-use, and bound to the current merchant Checkout.",
+    "Only a merchant Order proves purchase completion."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "query": "black trail running shoes under 150",
+  "intent": {
+    "summary": "Find black trail running shoes below USD 150 for a shopper comparing source-backed options.",
+    "productTypes": ["trail running shoes"],
+    "categories": ["Footwear"],
+    "attributes": {
+      "Color": ["Black"]
+    },
+    "maxPrice": {
+      "amountMinor": 15000,
+      "currency": "USD"
+    },
+    "sort": "relevance"
+  },
+  "context": {
+    "locale": "en-US",
+    "region": "US",
+    "currency": "USD",
+    "channel": "agent"
+  },
+  "agentContext": {
+    "integrationId": "hermes-agent-preview",
+    "surface": "hermes_agent",
+    "requestedActionScope": "read:search",
+    "externalSubjectRef": "opaque-user-or-session-ref",
+    "externalTaskRef": "opaque-shopping-task-ref",
+    "hostCapabilities": [
+      "source_labels",
+      "freshness",
+      "caveats",
+      "no_buy_warnings",
+      "commercial_disclosures",
+      "authority_limits",
+      "allowed_next_actions"
+    ]
+  },
+  "pagination": {
+    "limit": 5
+  }
+}
